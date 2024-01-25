@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Displaying
-$soso=1
+soso=1
 
 while [ $soso -le 20 ]; do
     case $soso in
@@ -20,6 +20,6 @@ while [ $soso -le 20 ]; do
             echo $soso        ;;
     esac
 
-    (($soso++))
+    ((soso++))
 done
 
