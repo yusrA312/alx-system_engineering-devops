@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #clk
+
 hour=0
 
 while [ $hour -le 12 ]; do
@@ -9,8 +10,7 @@ while [ $hour -le 12 ]; do
         minute=1
     else
         minute=0
-    fi
-    
+    fi    
     while [ $minute -le 59 ]; do
         echo $minute
         ((minute++))
