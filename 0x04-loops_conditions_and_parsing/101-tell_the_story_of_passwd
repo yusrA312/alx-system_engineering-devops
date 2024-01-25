@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# displays a story with each line of /etc/passwd.
+
+i="/etc/passwd"
+while IFS=: read -r ee1 yy2 ey3 f4 ye e6 y7
+do
+    echo "The user $ee1 is part of the $f4 gang, lives in $e6 and rides $y7. $ey3's place is protected by the passcode $yy2, more info about the user here: $ye"
+done < "$i"
