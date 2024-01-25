@@ -2,8 +2,7 @@
 
 sosoo=1
 
-while [ $sosoo -le 10 ]; do
-    case $sosoo in
+while [ $sosoo -le 10 ]; do case $sosoo in
         4)
             echo "bad luck"
             ;;
