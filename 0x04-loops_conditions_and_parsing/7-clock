@@ -5,7 +5,7 @@ hour=0
 while [ $hour -le 12 ]; do
     echo "Hour: $hour"
     
-    if [ $hour -lt 12 ]; then
+    if [ $hour -le 12 ]; then
         minute=1
     else
         minute=0
@@ -17,4 +17,3 @@ while [ $hour -le 12 ]; do
     
     ((hour++))
 done
-
