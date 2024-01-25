@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #dislay
 
-for file in [!-.];do
-    if [ -f "$file" ]
+for file in [!-.];do if [ -f "$file" ]
     then
         echo "${file#*-}"
     fi
