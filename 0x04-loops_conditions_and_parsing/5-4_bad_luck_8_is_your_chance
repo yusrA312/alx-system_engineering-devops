@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
-#display
+# display
 
-sosoo=1
+coco=1
 
-while [ $sosoo -le 10 ]; do case $sosoo in
-        4)
-            echo "bad luck"
-            ;;
-        8)
-            echo "good luck"
-            ;;
-        *)
-            echo "Best School"
-            ;;
-    esac
+while [ "$coco" -lt 11 ]
+do
+    if [ "$coco" -eq 4 ]; then
+        echo "bad luck"
+    elif [ "$coco" -eq 8 ]; then
+        echo "good luck"
+    else
+        echo "Best School"
+    fi
 
-    ((sosoo++))
+    ((coco++))
 done
