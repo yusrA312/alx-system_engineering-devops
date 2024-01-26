@@ -1,39 +1,57 @@
 #!/usr/bin/env bash
 
-# Define function
-handlecase() {
-    case $1 in
-        SIGTERM)
-            echo "I hate the kill command"
-            cleanup_exit
-            ;;
-        SIGINT)
-            echo "Y U no love me?!"
-            ;;
-        SIGQUIT)
-            echo "Received SIGQUIT signal"
-            cleanup_exit
-            ;;
-    esac
+# Does the following:
+
+Create a file /var/run/myscript.pid containing
+
+#
+
+the script PID.
+
+Displays "To infinity and beyond" indefinitely
+
+#
+
+Displays "I hate the kill command" upon receiving
+
+#
+
+a SIGTERM
+
+#
+
+Displays "Y U no love me?!" upon receiving a
+
+SIGINT
+
+# Deletes the file /var/run/myscript.pid and terminates upon
+
+#+ receiving a SIGQUIT or SIGTERM.
+
+terminator() {
+
+rm/var/run/myscript.pid
+
+exit
+
 }
 
-# Function to cleanup and exit
-cleanup_exit() {
-    echo "Cleaning up and exiting"
-    rm -f /var/run/myscript.pid
-    exit 0
-}
+echo "$$" > /var/run/myscript.pid
 
-# Set up
-trap 'handlecase SIGTERM' SIGTERM
-trap 'handlecase SIGINT' SIGINT
-trap 'handlecase SIGQUIT' SIGQUIT
+while true
 
-# Get 
-echo $$ > /var/run/myscript.pid
+do
 
-#message
 echo "To infinity and beyond"
-while true; do
-    sleep 1
+
+sleep 2
+
+trap 'echo "Y U no love me?!"' SIGINT
+
+trap echo "I hate the kill command" && terminator'
+
+SIGTERM
+
+trap 'terminator' SIGQUIT
+
 done
