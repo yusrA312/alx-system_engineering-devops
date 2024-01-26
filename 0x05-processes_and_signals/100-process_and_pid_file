@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Define function
+handlecase() {
+    case $1 in
+        SIGTERM)
+            echo "I hate the kill command"
+            cleanup_exit
+            ;;
+        SIGINT)
+            echo "Y U no love me?!"
+            ;;
+        SIGQUIT)
+            echo "Received SIGQUIT signal"
+            cleanup_exit
+            ;;
+    esac
+}
+
+# Function to cleanup and exit
+cleanup_exit() {
+    echo "Cleaning up and exiting"
+    rm -f /var/run/myscript.pid
+    exit 0
+}
+
+# Set up
+trap 'handlecase SIGTERM' SIGTERM
+trap 'handlecase SIGINT' SIGINT
+trap 'handlecase SIGQUIT' SIGQUIT
+
+# Get 
+echo $$ > /var/run/myscript.pid
+
+#message
+echo "To infinity and beyond"
+while true; do
+    sleep 1
+done
