@@ -10,11 +10,11 @@
  */
 int infinite_while(void)
 {
-    while (1)
-    {
-        sleep(1);
-    }
-    return (0);
+	while (1)
+	{
+		sleep(1);
+	}
+	return (0);
 }
 
 /**
@@ -23,28 +23,28 @@ int infinite_while(void)
  */
 int main(void)
 {
-    pid_t chi;
-    int x;
+	pid_t chi;
+	int x;
 
-    for (x = 0; x < 5; x++)
-    {
-        chi = fork();
+	for (x = 0; x < 5; x++)
+	{
+		chi = fork();
 
-        if (chi == -1)
-        {
-            perror("Error creating child process");
-            exit(EXIT_FAILURE);
-        }
+		if (chi == -1)
+		{
+			perror("Error creating child process");
+			exit(EXIT_FAILURE);
+		}
 
-        if (chi == 0)
-        {
+		if (chi == 0)
+		{
+			printf("Zombie process created, PID: %d\n", getpid());
+			exit(0);
+		}
+	}
 
-            printf("Zombie process created, PID: %d\n", getpid());
-            exit(0);
-        }
-    }
+	infinite_while();
 
-    infinite_while();
-
-    return (0);
+	return (0);
 }
+
