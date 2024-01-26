@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Capture the PID of the background process
+
 bg_process_pid=$!
 
 # Wait for user input in the second script
@@ -8,4 +9,4 @@ read -p "Press enter to stop the infinite loop..."
 # Use kill to terminate the background process
 kill $bg_process_pid
 
-echo "Terminated
+echo "Terminatedi"
