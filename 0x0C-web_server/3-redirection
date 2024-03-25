@@ -1,30 +1,11 @@
 #!/usr/bin/env bash
+# A script to set up a new Ubuntu instance
 
-# Function to update package lists and install Nginx
-setup_nginx() {
-	sudo apt-get update -y -qq
-		sudo apt-get install -y nginx
-}
+update='sudo apt-get update -y -qq'
+install_nginx='sudo apt-get install -y nginx'
+echo 'Hello World!' | sudo tee /var/www/html/index.html
+replace_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+replace_command="sudo sed -i 's/server_name _;/$replace_string/' /etc/nginx/sites-enabled/default"
+restart_nginx='sudo service nginx restart'
 
-# Function to create index.html with "Hello World!"
-create_index_html() {
-	echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
-}
-
-# Function to configure Nginx
-configure_nginx() {
-	string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
-		sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
-		sudo service nginx restart
-}
-
-# Main function
-main() {
-	setup_nginx
-		create_index_html
-		configure_nginx
-}
-
-# Call the main function
-main
-
+$update && $install_nginx && $replace_command && $restart_nginx
