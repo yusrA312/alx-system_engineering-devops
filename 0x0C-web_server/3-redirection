@@ -1,14 +1,30 @@
 #!/usr/bin/env bash
-#  A Script that configures a new Ubuntu 
 
+# Function to update package lists and install Nginx
+setup_nginx() {
+	    sudo apt-get update -y -qq
+		        sudo apt-get install -y nginx
+}
 
-sudo apt-get update -y -qq
-sudo apt-get install -y nginx
+# Function to create index.html with "Hello World!"
+create_index_html() {
+	    echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
+}
 
+# Function to configure Nginx
+configure_nginx() {
+	    string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+		        sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+			    sudo service nginx restart
+}
 
-echo "Hello World!" | sudo tee /var/www/html/index.html
+# Main function
+main() {
+	    setup_nginx
+		        create_index_html
+			    configure_nginx
+}
 
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+# Call the main function
+main
 
-sudo service nginx restart
