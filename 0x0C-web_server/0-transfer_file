@@ -9,9 +9,10 @@ if [ "$#" -lt 3 ]; then
     usage
     exit 1
 fi
+FILE_PATH=$2
+SSH_KEY=$1
+USER="ubuntu"
+IP_ADD=3.84.238.226
 
-ssh_key=$4
-file_path=$1
-user="ubuntu"
-ip_address="3.84.238.226"
-scp -o StrictHostKeyChecking=no -i "$ssh_key" "$file_path" "$user"@"$ip_address":~/
+# Transfer the file using scp
+scp -o StrictHostKeyChecking=no -i "$SSH_KEY" "$FILE_PATH" $USER@$IP_ADD:~/
