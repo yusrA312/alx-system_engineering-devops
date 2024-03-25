@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-# A bash script that will configure your ngnix so that you would host an html
-# page that gives back hello helborton
-sudo apt-get update
-sudo apt-get -y install nginx
-echo "Hello world!" | sudo tee /var/www/html/index.html
-sudo sed -i "48i\\\trewrite ^/
-redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n" /etc/nginx/sites-available/default
+#  A Script that configures a new Ubuntu 
+
+
+sudo apt-get update -y -qq
+sudo apt-get install -y nginx
+
+
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
 sudo service nginx restart
