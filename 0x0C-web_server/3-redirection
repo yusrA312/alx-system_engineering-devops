@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
-# A script to set up a new Ubuntu instance
 
-update='sudo apt-get update -y -qq'
-install_nginx='sudo apt-get install -y nginx'
-echo 'Hello World!' | sudo tee /var/www/html/index.html
-replace_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
-replace_command="sudo sed -i 's/server_name _;/$replace_string/' /etc/nginx/sites-enabled/default"
-restart_nginx='sudo service nginx restart'
+# Update package lists and install Nginx
+sudo apt-get update -y -qq
+sudo apt-get install -y nginx
 
-$update && $install_nginx && $replace_command && $restart_nginx
+# Create HTML file with "Hello World!"
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Define string for replacement
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+
+# Replace default server configuration in Nginx configuration
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Restart Nginx service
+sudo service nginx restart
