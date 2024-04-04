@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# Nginx is listening to port 80
-sudo rm /etc/nginx/sites-enabled/default
-sudo sed -i "s/8080/80/g" /etc/nginx/sites-available/default
-sudo sed -i "s/ipv6only=on//" /etc/nginx/sites-available/default
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
+# Update Nginx configuration
+sudo sed -i 's/8080/80/' /etc/nginx/sites-enabled/default
+sudo systemctl restart nginx
+sudo sh -c 'echo "" > /run/nginx.pid'
