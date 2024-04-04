@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
-# After configuring domain zone, use this script to output where each subdomain points to
-runDig () {
+
+# Function to perform DNS lookup and output information
+runDig() {
 	subarg=$1
 		urlarg=$2
 
-		dig "$subarg.$urlarg" | grep -A1 'ANSWER SECTION:' | tail -1 | awk -v s="$subarg" 'BEGIN { FS = " " } ; { print "The subdomain " s " is a " $4 " record and points to " $5 }'
+		record_type=$(dig "$subarg.$urlarg" | awk '/ANSWER SECTION/{getline; print $4}')
+		destination=$(dig "$subarg.$urlarg" | awk '/ANSWER SECTION/{getline; print $5}')
+		echo "The subdomain $subarg is a $record_type record and points to $destination"
 }
 
-allSubs=( "www" "lb-01" "web-01" "web-02" )
+# List of subdomains to check
+allSubs=("www" "lb-01" "web-01" "web-02")
 
+# Check arguments and perform DNS lookup accordingly
 if [ $# -eq 1 ]; then
 url="$1"
-for s in "${allSubs[@]}"
-do
-runDig "$s" "$url"
+for sub in "${allSubs[@]}"; do
+runDig "$sub" "$url"
 done
 elif [ $# -eq 2 ]; then
 url="$1"
