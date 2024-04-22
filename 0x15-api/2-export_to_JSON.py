@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Python to get data from an API and convert to Json"""
+""" API and convert to Json"""
 import csv
 import json
 import requests
@@ -15,14 +15,14 @@ if __name__ == '__main__':
     res = requests.get(url_to_task)
     tasks = res.json()
 
-    dict_data = {USER_ID: []}
+    data = {USER_ID: []}
     for task in tasks:
-        TASK_COMPLETED_STATUS = task.get('completed')
+        STATUS = task.get('completed')
         TASK_TITLE = task.get('title')
-        dict_data[USER_ID].append({
+        data[USER_ID].append({
                                   "task": TASK_TITLE,
-                                  "completed": TASK_COMPLETED_STATUS,
+                                  "completed": STATUS,
                                   "username": USERNAME})
-    """print(dict_data)"""
-with open(f'{USER_ID}.json', 'w') as f:
-    json.dump(dict_data, f)
+    filename = f"{USER_ID}.json"
+with open(filename, "w") as f:
+    f.write(json.dumps(data))
