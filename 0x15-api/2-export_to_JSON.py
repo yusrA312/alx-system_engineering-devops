@@ -24,6 +24,5 @@ if __name__ == '__main__':
                                   "completed": TASK_COMPLETED_STATUS,
                                   "username": USERNAME})
     """print(dict_data)"""
-    filename = f"{USER_ID}.json"
-with open(filename, "w") as f:
-    f.write(json.dumps(dict_data))
+with open(f'{USER_ID}.json', 'w') as f:
+    json.dump(dict_data, f)
