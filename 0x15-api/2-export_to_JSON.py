@@ -17,13 +17,13 @@ if __name__ == '__main__':
     res = requests.get(url_to_task)
     tasks = res.json()
 
-    dict_data = {USER_ID: []}
+    ct_data = {USER_ID: []}
     for task in tasks:
-        TASK_COMPLETED_STATUS = task.get('completed')
-        TASK_TITLE = task.get('title')
-        dict_data[USER_ID].append({
-                                  "task": TASK_TITLE,
-                                  "completed": TASK_COMPLETED_STATUS,
+        STATUS = task.get('completed')
+        TITLE = task.get('title')
+        ct_data[USER_ID].append({
+                                  "task": TITLE,
+                                  "completed": STATUS,
                                   "username": USERNAME})
-    with open('{}.json'.format(USER_ID), 'w') as f:
-        json.dump(dict_data, f)
+    with open('{}.json'.format(USER_ID), 'w') as jf:
+        json.dump(ct_data, jf)
