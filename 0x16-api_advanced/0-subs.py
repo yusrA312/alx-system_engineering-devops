@@ -18,6 +18,3 @@ def number_of_subscribers(subreddit):
         return 0
 
 if __name__ == "__main__":
-    subreddit = input("Enter subreddit: ")
-    print(number_of_subscribers(subreddit))
-
