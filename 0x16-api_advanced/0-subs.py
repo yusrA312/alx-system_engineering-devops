@@ -19,6 +19,4 @@ def number_of_subscribers(subreddit):
         return 0
     return r.get('data', {}).get('subscribers', 0)
 
-# Example usage:
-print(number_of_subscribers("valid_subreddit"))
-print(number_of_subscribers("invalid_subreddit"))
+
