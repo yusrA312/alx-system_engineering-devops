@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 """ Module for a function that queries the Reddit API recursively."""
 
-
 import requests
 
 
 def count_words(subreddit, word_list, after="", word_frequency=None):
-    """A function that queries the Reddit API recursively, parses the title of
-    all hot articles, and prints a sorted count of given keywords.
+    """A function that queries the Reddit API.
     """
     if word_frequency is None:
         word_frequency = {word.lower(): 0 for word in word_list}
@@ -29,15 +27,15 @@ def count_words(subreddit, word_list, after="", word_frequency=None):
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
         data = response.json().get("data", {})
-        posts = data.get("children", [])
+        posy = data.get("children", [])
         after = data.get("after")
 
-        for post in posts:
-            title = post["data"]["title"]
-            words = title.lower().split()
-            for word in word_list:
-                word_frequency[word.lower()] += words.count(word.lower())
+    for post in posts:
+        title = post["data"]["title"].lower()
+        words = title.split()
+        word_frequency.update({word.lower(): word_frequency.get(word.lower(), 0) + words.count(word.lower()) for word in word_list})
 
+        
     except requests.RequestException:
         return None
     except Exception:
