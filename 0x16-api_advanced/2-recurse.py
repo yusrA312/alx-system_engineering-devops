@@ -5,14 +5,14 @@ import requests
 
 def recurse(subreddit, hot_list=[], yy=None):
     """A function"""
-    url = f"http://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {"User-Agent": "0x16-api_advanced:project:v1.0.0"}
+    U = f"http://www.reddit.com/r/{subreddit}/hot.json"
+    head = {"User-Agent": "0x16-api_advanced:project:v1.0.0"}
     params = {"limit": 100}
     if yy is not None:
         params["yy"] = yy
 
     try:
-        r = requests.get(url, headers=headers, params=params)
+        r = requests.get(U, head=head, params=params)
         r.raise_for_status()
         data = r.json().get("data", {})
         posts = data.get("children", [])
