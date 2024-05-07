@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This is the request module that will handle requests sent to the HTTP"""
+
 import requests
 
 
@@ -8,19 +9,21 @@ def recurse(subreddit, hot_list=[], after=None):
     the titles of all hot articles for a given subreddit. If no results
     are found for the given subreddit, the function should return None
     """
-    url = 'http://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    url = f'http://www.reddit.com/r/{subreddit}/hot.json'
     headers = {'User-Agent': '0x16-api_advanced:project:v1.0.0'}
     params = {'limit': 100}
     if after is not None:
         params['after'] = after
 
-    r = requests.get(url, headers=headers, params=params)
-    if r.status_code == 200:
-        posts = r.json().get('data', {}).get('children', [])
+    try:
+        r = requests.get(url, headers=headers, params=params)
+        r.raise_for_status()
+        data = r.json().get('data', {})
+        posts = data.get('children', [])
         if not posts:
             return hot_list
-        [hot_list.append(post['data']['title']) for post in posts]
-        new_after = r.json().get('data', {}).get('after')
+        hot_list.extend([post['data']['title'] for post in posts])
+        new_after = data.get('after')
         return recurse(subreddit, hot_list, new_after)
-    else:
+    except requests.RequestException:
         return None
