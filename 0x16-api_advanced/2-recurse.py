@@ -3,16 +3,14 @@
 import requests
 
 
-def recurse(subreddit, hot_list=[], after=None):
-    """A function that queries the Reddit API and returns a list containing
-    the titles of all hot articles for a given subreddit. If no results
-    are found for the given subreddit, the function should return None
+def recurse(subreddit, hot_list=[], yy=None):
+    """A function
     """
     url = f'http://www.reddit.com/r/{subreddit}/hot.json'
     headers = {'User-Agent': '0x16-api_advanced:project:v1.0.0'}
     params = {'limit': 100}
-    if after is not None:
-        params['after'] = after
+    if yy is not None:
+        params['yy'] = yy
 
     try:
         r = requests.get(url, headers=headers, params=params)
@@ -22,7 +20,7 @@ def recurse(subreddit, hot_list=[], after=None):
         if not posts:
             return hot_list
         hot_list.extend([post['data']['title'] for post in posts])
-        new_after = data.get('after')
-        return recurse(subreddit, hot_list, new_after)
+        new_yy = data.get('yy')
+        return recurse(subreddit, hot_list, new_yy)
     except requests.RequestException:
         return None
