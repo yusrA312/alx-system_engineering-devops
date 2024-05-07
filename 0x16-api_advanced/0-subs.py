@@ -1,5 +1,8 @@
 #!/usr/bin/python3
+""" Function that queries the Reddit API """
 import requests
+import sys
+
 
 def number_of_subscribers(subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
