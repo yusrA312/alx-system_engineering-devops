@@ -5,16 +5,19 @@ import sys
 
 
 def top_ten(subreddit):
-    """Returns: top ten post titles
-    or None if queried subreddit is invalid"""
-    headers = {"User-Agent": "xica369"}
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    parameters = {"limit": 10}
-    try:
-        response = requests.get(url, headers=headers, params=parameters)
-        response.raise_for_status()
-        titles_ = response.json().get("data", {}).get("children", [])
-        for title_ in titles_:
-            print(title_.get("data", {}).get("title"))
-    except requests.RequestException as e:
-        print(None)
+    """Queries the Reddit API to get top ten posts in a subreddit"""
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
+    headers = {'User-Agent': 'MyBot/1.0'}  # Changed the User-Agent
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json().get('data')
+        if data:
+            children = data.get("children")
+            if children:
+                for child in children:
+                    title = child.get("data", {}).get("title")
+                    if title:
+                        print(title)
+                return
+    print('None')
